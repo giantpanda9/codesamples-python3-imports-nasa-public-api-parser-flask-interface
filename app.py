@@ -13,10 +13,34 @@ app.debug = True
 @app.route("/")
 def index():
 	parseNASAInstance = parseNASA()
-	APIResponse = parseNASAInstance.getResponse()
+	APIResponse = parseNASAInstance.getAll()
+	typeText = "for 7 days"
 	return render_template(
 		'index.html',
-		APIResponse=APIResponse
+		APIResponse=APIResponse,
+		typeText=typeText
+		)
+
+@app.route("/today")
+def today():
+	parseNASAInstance = parseNASA()
+	APIResponse = parseNASAInstance.getAll(True)
+	typeText = "for today"
+	return render_template(
+		'index.html',
+		APIResponse=APIResponse,
+		typeText=typeText
+		)
+
+@app.route("/hazardous")
+def hazardous():
+	parseNASAInstance = parseNASA()
+	APIResponse = parseNASAInstance.getHazardous()
+	typeText = "hazardous to Earth for 7 days"
+	return render_template(
+		'hazardous.html',
+		APIResponse=APIResponse,
+		typeText=typeText
 		)
 
 if __name__ == "__main__":
